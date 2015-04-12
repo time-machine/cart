@@ -1,9 +1,15 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher')
 var EventEmitter = require('events').EventEmitter
+var FluxCartConstants = require('../constants/FluxCartConstants')
 var _ = require('underscore')
 
 // define initial data points
 var _products = {}, _cartVisible = false
+
+// set cart visibility
+function setCartVisible(cartVisible) {
+  _cartVisible = cartVisible
+}
 
 // extend Cart Store with EventEmitter to add eventing capabilities
 var CartStore = _.extend({}, EventEmitter.prototype, {
@@ -37,6 +43,11 @@ var CartStore = _.extend({}, EventEmitter.prototype, {
   // emit change event
   emitChange: function() {
     this.emit('change')
+  },
+
+  // add change listener
+  addChangeListener: function(callback) {
+    this.on('change', callback)
   }
 })
 
@@ -45,6 +56,11 @@ AppDispatcher.register(function(payload) {
   var action = payload.action
 
   switch(action.actionType) {
+    // respond to CART_VISIBLE action
+    case FluxCartConstants.CART_VISIBLE:
+      setCartVisible(action.cartVisible)
+      break
+
     default:
       return true
   }

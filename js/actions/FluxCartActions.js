@@ -9,6 +9,14 @@ var FluxCartActions = {
       actionType: FluxCartConstants.RECEIVE_DATA,
       data: data
     })
+  },
+
+  // update cart visibility status
+  updateCartVisible: function(cartVisible) {
+    AppDispatcher.handleAction({
+      actionType: FluxCartConstants.CART_VISIBLE,
+      cartVisible: cartVisible
+    })
   }
 }
 

@@ -22,7 +22,7 @@ var FluxCartApp = React.createClass({
 
   // add change listener to stores
   componentDidMount: function() {
-    console.log("componentDidMount")
+    CartStore.addChangeListener(this._onChange)
   },
 
   // remove change listener from stores
@@ -37,6 +37,11 @@ var FluxCartApp = React.createClass({
         <FluxCart products={this.state.cartItems} count={this.state.cartCount} total={this.state.cartTotal} visible={this.state.cartVisible} />
       </div>
     )
+  },
+
+  // method to setState based upon Store changes
+  _onChange: function() {
+    this.setState(getCartState())
   }
 })
 
