@@ -4,7 +4,8 @@ var FluxCartConstants = require('../constants/FluxCartConstants')
 var _ = require('underscore')
 
 // define initial data points
-var _products = {}, _cartVisible = false
+var _products = {}
+var _cartVisible = false
 
 // set cart visibility
 function setCartVisible(cartVisible) {
@@ -28,10 +29,12 @@ var CartStore = _.extend({}, EventEmitter.prototype, {
     var total = 0
     for (product in _products) {
       console.log('getCartTotal has _products')
+
       // if (_products.hasOwnProperty(product)) {
       //   total += _products[product].price * _products[product].quantity
       // }
     }
+
     return total.toFixed(2)
   },
 
@@ -55,7 +58,7 @@ var CartStore = _.extend({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload) {
   var action = payload.action
 
-  switch(action.actionType) {
+  switch (action.actionType) {
     // respond to CART_VISIBLE action
     case FluxCartConstants.CART_VISIBLE:
       setCartVisible(action.cartVisible)

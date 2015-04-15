@@ -16,7 +16,7 @@ function getCartState() {
 var FluxCartApp = React.createClass({
   // get initial state from stores
   getInitialState: function() {
-    console.log("getInitialState")
+    console.log('getInitialState')
     return getCartState()
   },
 
@@ -27,7 +27,7 @@ var FluxCartApp = React.createClass({
 
   // remove change listener from stores
   componentWillUnmount: function() {
-    console.log("componentWillUnmount")
+    console.log('componentWillUnmount')
   },
 
   // render our child components, passing state via props

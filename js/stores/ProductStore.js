@@ -4,7 +4,8 @@ var FluxCartConstants = require('../constants/FluxCartConstants')
 var _ = require('underscore')
 
 // define initial data points
-var _product = {}, _selected = null
+var _product = {}
+var _selected = null
 
 // method to load product data from mock API
 function loadProductData(data) {
@@ -34,7 +35,7 @@ var ProductStore = _.extend({}, EventEmitter.prototype, {
 AppDispatcher.register(function(payload) {
   var action = payload.action
 
-  switch(action.actionType) {
+  switch (action.actionType) {
     // respond to RECEIVE_DATA action
     case FluxCartConstants.RECEIVE_DATA:
       loadProductData(action.data)
