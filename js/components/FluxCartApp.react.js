@@ -1,5 +1,6 @@
 var React = require('react')
 var CartStore = require('../stores/CartStore')
+var FluxProduct = require('./FluxProduct.react')
 var FluxCart = require('./FluxCart.react')
 
 // method to retrieve state from Stores
@@ -35,6 +36,7 @@ var FluxCartApp = React.createClass({
     return (
       <div className="flux-cart-app">
         <FluxCart products={this.state.cartItems} count={this.state.cartCount} total={this.state.cartTotal} visible={this.state.cartVisible} />
+        <FluxProduct />
       </div>
     )
   },
