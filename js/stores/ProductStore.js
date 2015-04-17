@@ -15,6 +15,16 @@ function loadProductData(data) {
 
 // extend ProductStore with EventEmitter to add eventing capabilities
 var ProductStore = _.extend({}, EventEmitter.prototype, {
+  // return Product data
+  getProduct: function() {
+    return _product
+  },
+
+  // return selected product
+  getSelected: function() {
+    return _selected
+  },
+
   // emit change event
   emitChange: function() {
     this.emit('change')
