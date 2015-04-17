@@ -20,18 +20,19 @@ function getCartState() {
 var FluxCartApp = React.createClass({
   // get initial state from stores
   getInitialState: function() {
-    console.log('getInitialState')
     return getCartState()
   },
 
   // add change listener to stores
   componentDidMount: function() {
+    ProductStore.addChangeListener(this._onChange)
     CartStore.addChangeListener(this._onChange)
   },
 
   // remove change listener from stores
   componentWillUnmount: function() {
-    console.log('componentWillUnmount')
+    ProductStore.removeChangeListener(this._onChange)
+    CartStore.removeChangeListener(this._onChange)
   },
 
   // render our child components, passing state via props
@@ -39,7 +40,7 @@ var FluxCartApp = React.createClass({
     return (
       <div className="flux-cart-app">
         <FluxCart products={this.state.cartItems} count={this.state.cartCount} total={this.state.cartTotal} visible={this.state.cartVisible} />
-        <FluxProduct products={this.state.product} cartitems={this.state.cartItems} selected={this.state.selectedProduct} />
+        <FluxProduct product={this.state.product} cartitems={this.state.cartItems} selected={this.state.selectedProduct} />
       </div>
     )
   },

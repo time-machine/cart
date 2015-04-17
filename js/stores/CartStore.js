@@ -7,9 +7,20 @@ var _ = require('underscore')
 var _products = {}
 var _cartVisible = false
 
+// add product to cart
+function add(sku, update) {
+  update.quantity = sku in _products ? _products[sku].quantity + 1 : 1
+  _products[sku] = _.extend({}, _products[sku], update)
+}
+
 // set cart visibility
 function setCartVisible(cartVisible) {
   _cartVisible = cartVisible
+}
+
+// remove item from cart
+function removeItem(sku) {
+  delete _products[sku]
 }
 
 // extend Cart Store with EventEmitter to add eventing capabilities
@@ -28,11 +39,9 @@ var CartStore = _.extend({}, EventEmitter.prototype, {
   getCartTotal: function() {
     var total = 0
     for (product in _products) {
-      console.log('getCartTotal has _products')
-
-      // if (_products.hasOwnProperty(product)) {
-      //   total += _products[product].price * _products[product].quantity
-      // }
+      if (_products.hasOwnProperty(product)) {
+        total += _products[product].price * _products[product].quantity
+      }
     }
 
     return total.toFixed(2)
@@ -59,9 +68,19 @@ AppDispatcher.register(function(payload) {
   var action = payload.action
 
   switch (action.actionType) {
+    // respond to CART_ADD action
+    case FluxCartConstants.CART_ADD:
+      add(action.sku, action.update)
+      break
+
     // respond to CART_VISIBLE action
     case FluxCartConstants.CART_VISIBLE:
       setCartVisible(action.cartVisible)
+      break
+
+    // respond to CART_REMOVE action
+    case FluxCartConstants.CART_REMOVE:
+      removeItem(action.sku)
       break
 
     default:

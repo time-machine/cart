@@ -13,6 +13,11 @@ function loadProductData(data) {
   _selected = data[0].variants[0]
 }
 
+// method to set the currently selected product variantion
+function setSelected(index) {
+  _selected = _product.variants[index]
+}
+
 // extend ProductStore with EventEmitter to add eventing capabilities
 var ProductStore = _.extend({}, EventEmitter.prototype, {
   // return Product data
@@ -49,6 +54,11 @@ AppDispatcher.register(function(payload) {
     // respond to RECEIVE_DATA action
     case FluxCartConstants.RECEIVE_DATA:
       loadProductData(action.data)
+      break
+
+    // respond to SELECT_PRODUCT action
+    case FluxCartConstants.SELECT_PRODUCT:
+      setSelected(action.data)
       break
 
     default:

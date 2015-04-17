@@ -13,8 +13,15 @@ var FluxCart = React.createClass({
     FluxCartActions.updateCartVisible(true)
   },
 
+  // remove item from cart via Actions
+  removeFromCart: function(sku) {
+    FluxCartActions.removeFromCart(sku)
+    FluxCartActions.updateCartVisible(false)
+  },
+
   // render cart view
   render: function() {
+    var _this = this
     var products = this.props.products
     return (
       <div className={'flux-cart ' + (this.props.visible ? 'active' : '')}>
@@ -24,6 +31,10 @@ var FluxCart = React.createClass({
             {Object.keys(products).map(function(product) {
               return (
                 <li key={product}>
+                  <h1 className="name">{products[product].name}</h1>
+                  <p className="type">{products[product].type} x {products[product].quantity}</p>
+                  <p className="price">${(products[product].price * products[product].quantity).toFixed(2)}</p>
+                  <button type="button" className="remove-item" onClick={_this.removeFromCart.bind(_this, product)}>Remove</button>
                 </li>
               )
             })}
